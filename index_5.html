@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>University Admission Prep — Vienna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #16302A;
+    --ink-2: #1F4238;
+    --ink-3: #0F211C;
+    --gold: #B8923F;
+    --gold-light: #D9BD79;
+    --paper: #F1ECDD;
+    --paper-2: #E7DFC5;
+    --paper-3: #DCD2AE;
+    --text-dark: #1C2B24;
+    --text-muted: #5B6B60;
+    --line: rgba(28,43,36,0.14);
+    --brand-teal: #2CA9C4;
+    --brand-teal-dark: #1E8CA6;
+    --brand-yellow: #F0C544;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--paper);
+    color: var(--text-dark);
+    font-family: 'Public Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  .wrap{ max-width: 1180px; margin:0 auto; padding: 0 32px; }
+  a{ color:inherit; }
+  img,svg{ display:block; }
+
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; color: var(--ink); }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--gold); display:inline-block; }
+
+  /* ---------- Progress bar ---------- */
+  .progress-bar{
+    position:fixed; top:0; left:0; height:2.5px; width:0%; background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    z-index: 100; transition: width .08s linear;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(241,236,221,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 18px 32px; max-width:1180px; margin:0 auto;
+  }
+  .brand{
+    font-family:'Fraunces', serif; font-weight:600; font-size:19px; color:var(--ink);
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .mark{ width:26px; height:26px; flex-shrink:0; }
+  .brand .mark .rot{ transform-origin:13px 13px; animation: spin 24s linear infinite; }
+  .navlinks{ display:flex; gap: 30px; font-size: 14px; font-weight:500; }
+  .navlinks a{
+    text-decoration:none; color: var(--text-muted); transition: color .2s; position:relative; padding-bottom:4px;
+  }
+  .navlinks a::after{
+    content:""; position:absolute; left:0; right:0; bottom:0; height:1.5px; background: var(--gold);
+    transform: scaleX(0); transform-origin:left; transition: transform .25s ease;
+  }
+  .navlinks a:hover{ color: var(--ink); }
+  .navlinks a.active{ color: var(--ink); }
+  .navlinks a.active::after{ transform: scaleX(1); }
+  .nav-cta{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:0.04em;
+    background: var(--ink); color: var(--paper); padding: 10px 20px; border-radius:2px;
+    text-decoration:none; transition: background .2s, transform .2s;
+  }
+  .nav-cta:hover{ background: var(--ink-3); transform: translateY(-1px); }
+
+  .lang-switch{
+    position:relative; display:flex; border:1px solid var(--line); border-radius:20px; overflow:hidden;
+    flex-shrink:0; width:84px;
+  }
+  .lang-pill{
+    position:absolute; top:2px; bottom:2px; left:2px; width:calc(50% - 2px);
+    background: var(--ink); border-radius:16px; transition: transform .28s cubic-bezier(.65,0,.35,1);
+    z-index:0;
+  }
+  .lang-btn{
+    position:relative; z-index:1; flex:1;
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.05em;
+    padding: 7px 0; background: transparent; border:none; cursor:pointer;
+    color: var(--text-muted); transition: color .2s;
+  }
+  .lang-btn.active{ color: var(--paper); }
+  .lang-btn:not(.active):hover{ color: var(--ink); }
+
+  .navtoggle{
+    display:none; width:38px; height:38px; border:1px solid var(--line); border-radius:50%;
+    background:transparent; cursor:pointer; position:relative; flex-shrink:0;
+  }
+  .navtoggle span{
+    position:absolute; left:10px; right:10px; height:1.4px; background: var(--ink); transition: transform .25s, opacity .25s;
+  }
+  .navtoggle span:nth-child(1){ top:14px; }
+  .navtoggle span:nth-child(2){ top:19px; }
+  .navtoggle span:nth-child(3){ top:24px; }
+  .navtoggle.open span:nth-child(1){ transform: translateY(5px) rotate(45deg); }
+  .navtoggle.open span:nth-child(2){ opacity:0; }
+  .navtoggle.open span:nth-child(3){ transform: translateY(-5px) rotate(-45deg); }
+
+  .mobile-panel{
+    display:none; max-height:0; overflow:hidden; background: var(--paper);
+    border-bottom: 1px solid var(--line); transition: max-height .35s ease;
+  }
+  .mobile-panel.open{ max-height:340px; }
+  .mobile-panel .wrap{ padding: 8px 32px 22px; display:flex; flex-direction:column; gap:4px; }
+  .mobile-panel a{
+    text-decoration:none; color: var(--text-dark); font-size:15px; padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* ---------- Brand split scrollytelling ---------- */
+  .brand-split{ position:relative; height: 320vh; background: var(--ink-3); }
+  .brand-split-inner{
+    position: sticky; top:0; height:100vh; overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background: radial-gradient(ellipse at 50% 40%, var(--ink-2) 0%, var(--ink-3) 70%);
+  }
+  .brand-svg-wrap{ position:relative; width:min(38vh, 320px); z-index:3; }
+  .brand-svg-wrap svg{ width:100%; height:auto; overflow:visible; }
+  #bp-rotor{ transform-box: fill-box; transform-origin: 50% 50%; }
+  #bp-snake{ stroke-dasharray: 86 260; transition: opacity .25s ease; }
+  #bp-snake-head{ transition: opacity .25s ease; }
+  .bird-part{ transition: transform .05s linear; }
+  .brand-wordmark{
+    position:absolute; left:50%; bottom:10%; transform:translateX(-50%);
+    font-family:'Fraunces',serif; font-weight:700; font-size:clamp(20px,3vw,32px);
+    color:#F7F3E4; letter-spacing:0.02em; white-space:nowrap; text-align:center; z-index:3;
+    transition: opacity .3s ease;
+  }
+  .brand-scroll-hint{
+    position:absolute; left:50%; bottom:4%; transform:translateX(-50%);
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase;
+    color: rgba(247,243,228,0.5); transition: opacity .3s ease; z-index:3;
+  }
+  .brand-scroll-hint::after{ content:"↓"; display:block; margin-top:6px; animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(6px);} }
+  .option-card{
+    position:absolute; width: 230px; opacity:0; transform: translateY(16px) scale(0.96);
+    transition: opacity .5s ease, transform .5s ease; pointer-events:none; z-index:2;
+  }
+  .option-card.show{ opacity:1; transform:none; }
+  .option-card .oc-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
+    color: var(--brand-yellow);
+  }
+  .option-card h4{ font-family:'Fraunces',serif; color:#F7F3E4; font-size:17px; margin-top:6px; font-weight:600; }
+  .option-card p{ font-family:'Public Sans',sans-serif; font-size:12.5px; color: rgba(247,243,228,0.65); margin-top:6px; line-height:1.4; }
+  .option-card.oc-head{ left:50%; top:6%; margin-left:-115px; text-align:center; }
+  .option-card.oc-wing{ right:6%; top:50%; margin-top:-64px; }
+  .option-card.oc-torso{ left:50%; bottom:7%; margin-left:-115px; text-align:center; }
+  .option-card.oc-tail{ left:6%; top:50%; margin-top:-64px; }
+  @media (max-width: 900px){
+    .brand-split{ height: 280vh; }
+    .option-card{ width: 168px; }
+    .option-card h4{ font-size:14.5px; }
+    .option-card p{ font-size:11px; }
+    .option-card.oc-head{ left:50%; top:5%; margin-left:-84px; }
+    .option-card.oc-wing{ right:3%; top:50%; margin-top:-58px; }
+    .option-card.oc-torso{ left:50%; bottom:20%; margin-left:-84px; }
+    .option-card.oc-tail{ left:3%; top:50%; margin-top:-58px; }
+  }
+
+
+  .hero{
+    position:relative; overflow:hidden;
+    background: radial-gradient(ellipse at 78% 15%, var(--ink-2) 0%, var(--ink) 55%, var(--ink-3) 100%);
+    color: var(--paper);
+    padding: 118px 0 100px;
+  }
+  .hero .wrap{ position:relative; z-index:2; display:grid; grid-template-columns: 1.15fr 0.85fr; gap:40px; align-items:center; }
+  .hero .eyebrow{ color: var(--gold-light); margin-bottom:22px; }
+  .hero .eyebrow::before{ background: var(--gold-light); }
+  .hero h1{
+    color: #F7F3E4; font-size: clamp(34px, 4.6vw, 56px); line-height:1.06; font-weight:600;
+    max-width: 640px;
+  }
+  .hero h1 em{ font-style:italic; color: var(--gold-light); font-weight:500; }
+  .hero p.lead{
+    margin-top: 24px; font-size: 17px; color: rgba(247,243,228,0.78); max-width: 480px; line-height:1.65;
+  }
+  .hero .cta-row{ margin-top:38px; display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
+  .btn-gold{
+    background: var(--gold-light); color: var(--ink-3); font-weight:600; font-size:14.5px;
+    padding: 15px 28px; border-radius:2px; text-decoration:none; display:inline-block;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 0 1px rgba(217,189,121,0.4);
+  }
+  .btn-gold:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.25); }
+  .btn-ghost{
+    color: rgba(247,243,228,0.85); font-size:14.5px; font-weight:500; text-decoration:none;
+    border-bottom: 1px solid rgba(247,243,228,0.35); padding-bottom:3px; transition: border-color .2s, color .2s;
+  }
+  .btn-ghost:hover{ color:#fff; border-color: #fff; }
+
+  .dome-wrap{ position:relative; display:flex; align-items:center; justify-content:center; }
+  .dome-wrap svg{ width:100%; max-width:420px; height:auto; }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+  .dome-wrap .ring-slow{ transform-origin:210px 210px; animation: spin 90s linear infinite; }
+  .dome-wrap .ring-slow-rev{ transform-origin:210px 210px; animation: spin 70s linear infinite reverse; }
+  .dome-wrap .seal-dot{ animation: pulse 2.6s ease-in-out infinite; transform-origin:center; }
+  .dome-wrap .seal-dot:nth-child(2){ animation-delay:.4s; }
+  .dome-wrap .seal-dot:nth-child(3){ animation-delay:.8s; }
+  .dome-wrap .seal-dot:nth-child(4){ animation-delay:1.2s; }
+  @keyframes pulse{ 0%,100%{ opacity:.55; r:4; } 50%{ opacity:1; r:5.5; } }
+
+  .hero-stats{
+    position:relative; z-index:2; margin-top:74px; padding-top:34px;
+    border-top: 1px solid rgba(247,243,228,0.16);
+    display:grid; grid-template-columns: repeat(4,1fr); gap: 24px;
+  }
+  .hero-stats .stat b{
+    display:block; font-family:'Fraunces',serif; font-size:30px; color:#F7F3E4; font-weight:600;
+    font-variant-numeric: tabular-nums;
+  }
+  .hero-stats .stat span{ font-size:12.5px; color: rgba(247,243,228,0.6); }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{ opacity:0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in-view{ opacity:1; transform:none; }
+  .aud-grid .reveal:nth-child(1),.lang-grid .reveal:nth-child(1),.adv-grid .reveal:nth-child(1){ transition-delay:0ms; }
+  .aud-grid .reveal:nth-child(2),.lang-grid .reveal:nth-child(2),.adv-grid .reveal:nth-child(2){ transition-delay:90ms; }
+  .aud-grid .reveal:nth-child(3),.adv-grid .reveal:nth-child(3){ transition-delay:180ms; }
+  .adv-grid .reveal:nth-child(4){ transition-delay:270ms; }
+  .adv-grid .reveal:nth-child(5){ transition-delay:360ms; }
+  .adv-grid .reveal:nth-child(6){ transition-delay:450ms; }
+  .flow .reveal:nth-child(1){ transition-delay:0ms; }
+  .flow .reveal:nth-child(3){ transition-delay:120ms; }
+  .flow .reveal:nth-child(5){ transition-delay:240ms; }
+  .tl-row .reveal:nth-child(1){ transition-delay:0ms; }
+  .tl-row .reveal:nth-child(2){ transition-delay:130ms; }
+  .tl-row .reveal:nth-child(3){ transition-delay:260ms; }
+  .incl-list .reveal:nth-child(1){ transition-delay:0ms; }
+  .incl-list .reveal:nth-child(2){ transition-delay:60ms; }
+  .incl-list .reveal:nth-child(3){ transition-delay:120ms; }
+  .incl-list .reveal:nth-child(4){ transition-delay:180ms; }
+  .incl-list .reveal:nth-child(5){ transition-delay:240ms; }
+  .incl-list .reveal:nth-child(6){ transition-delay:300ms; }
+  .scale-step:nth-child(2){ transition-delay:0ms; }
+  .scale-step:nth-child(3){ transition-delay:110ms; }
+  .scale-step:nth-child(4){ transition-delay:220ms; }
+  .scale-step:nth-child(5){ transition-delay:330ms; }
+
+  /* ---------- Section generic ---------- */
+  section{ padding: 108px 0; position:relative; }
+  .section-head{ max-width: 640px; margin-bottom: 56px; }
+  .section-head h2{ font-size: clamp(28px,3.2vw,38px); margin-top:16px; line-height:1.14; }
+  .section-head p{ margin-top:16px; color: var(--text-muted); font-size:15.5px; max-width: 560px; }
+
+  /* ---------- Idea / partnership ---------- */
+  .idea{ background: var(--paper); }
+  .idea-copy{ max-width:640px; }
+  .idea-copy p{ color: var(--text-muted); font-size:15.5px; margin-top:14px; }
+
+  .flow{
+    margin-top: 56px;
+    display:grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0; align-items:stretch;
+  }
+  .flow-card{
+    background: var(--ink); color: var(--paper); border-radius:3px; padding: 30px 26px;
+    position:relative; transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .flow-card:hover{ transform: translateY(-4px); box-shadow: 0 16px 32px rgba(15,33,28,0.22); }
+  .flow-card.mid{ background: var(--gold); color: var(--ink-3); }
+  .flow-card .num{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.1em; opacity:0.65; }
+  .flow-card h3{ font-family:'Fraunces',serif; color:inherit; font-size:19px; margin-top:10px; font-weight:600; }
+  .flow-card ul{ margin-top:16px; padding-left:18px; font-size:13.6px; }
+  .flow-card ul li{ margin-bottom:7px; opacity:0.88; }
+  .flow-arrow{ display:flex; align-items:center; justify-content:center; padding: 0 6px; color: var(--gold); font-size:22px; }
+
+  /* ---------- Audience ---------- */
+  .audience{ background: var(--paper-2); }
+  .aud-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+  .aud-card{
+    background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 32px 26px;
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .aud-card:hover{ transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 16px 30px rgba(28,43,36,0.1); }
+  .aud-card .glyph{
+    width:40px; height:40px; border-radius:50%; border:1px solid var(--gold);
+    display:flex; align-items:center; justify-content:center; color:var(--gold);
+    font-family:'Fraunces',serif; font-size:15px; margin-bottom:20px; transition: background .3s, color .3s;
+  }
+  .aud-card:hover .glyph{ background: var(--gold); color: var(--paper); }
+  .aud-card h3{ font-size:18px; }
+  .aud-card p{ margin-top:10px; color: var(--text-muted); font-size:14px; }
+
+  /* ---------- Program ---------- */
+  .program{ background: var(--paper); }
+  .program-grid{ display:grid; grid-template-columns: 0.85fr 1.15fr; gap: 48px; align-items:start; }
+  .price-card{
+    background: var(--ink); color: var(--paper); border-radius: 4px; padding: 40px 34px;
+    position:sticky; top: 110px;
+  }
+  .price-card .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.1em; color: var(--gold-light);
+    text-transform:uppercase;
+  }
+  .price-card .amount{ font-family:'Fraunces',serif; font-size:58px; font-weight:600; margin-top:14px; color:#F7F3E4; }
+  .price-card .amount span{ font-size:22px; font-weight:500; opacity:0.7; }
+  .price-card .duration{ margin-top:6px; font-size:14px; color: rgba(247,243,228,0.65); }
+  .price-card hr{ border:none; border-top:1px solid rgba(247,243,228,0.16); margin: 26px 0; }
+  .price-card .note{ font-size:13px; color: rgba(247,243,228,0.6); line-height:1.6; }
+  .price-card .btn-gold{ margin-top:26px; width:100%; text-align:center; }
+
+  .incl-list{ display:flex; flex-direction:column; }
+  .incl-item{
+    display:flex; gap:18px; padding: 20px 0; border-bottom: 1px solid var(--line);
+    transition: padding-left .25s ease;
+  }
+  .incl-item:hover{ padding-left:8px; }
+  .incl-item:first-child{ padding-top:0; }
+  .incl-item .idx{ font-family:'IBM Plex Mono',monospace; color: var(--gold); font-size:13px; padding-top:3px; }
+  .incl-item h4{ font-family:'Fraunces',serif; font-size:16.5px; font-weight:600; color:var(--ink); }
+  .incl-item p{ margin-top:4px; color: var(--text-muted); font-size:13.8px; }
+
+  /* ---------- Languages (available now) ---------- */
+  .langs{ background: var(--ink); color: var(--paper); }
+  .langs .eyebrow{ color: var(--gold-light); }
+  .langs .eyebrow::before{ background:var(--gold-light); }
+  .langs .section-head h2{ color:#F7F3E4; }
+  .langs .section-head p{ color: rgba(247,243,228,0.68); }
+  .lang-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .lang-card{
+    border: 1px solid rgba(247,243,228,0.18); border-radius:4px; padding: 34px 30px;
+    background: rgba(247,243,228,0.03);
+    transition: border-color .25s, background .25s, transform .25s;
+  }
+  .lang-card:hover{ border-color: var(--gold-light); background: rgba(247,243,228,0.06); transform: translateY(-4px); }
+  .lang-badge{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; color: var(--ink-3); background: var(--gold-light);
+    padding: 6px 12px; border-radius:20px;
+  }
+  .lang-card h3{ color:#F7F3E4; font-size:22px; margin-top:18px; }
+  .lang-card p{ margin-top:12px; color: rgba(247,243,228,0.68); font-size:14.3px; }
+  .langs-note{
+    margin-top: 40px; padding-top:28px; border-top: 1px solid rgba(247,243,228,0.16);
+    font-size: 14px; color: rgba(247,243,228,0.6); max-width:760px;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline{ background: var(--paper); }
+  .tl-row{ display:grid; grid-template-columns: repeat(3,1fr); gap: 0; margin-top:20px; }
+  .tl-stage{ position:relative; padding: 0 26px 0 0; cursor:pointer; }
+  .tl-seal{
+    width:56px; height:56px; border-radius:50%; border: 1.5px solid var(--gold);
+    display:flex; align-items:center; justify-content:center; position:relative;
+    background: var(--paper); transition: background .3s, border-color .3s, transform .3s;
+  }
+  .tl-stage:hover .tl-seal{ transform: scale(1.06); }
+  .tl-seal::before{
+    content:""; position:absolute; inset:6px; border-radius:50%; border:1px dashed var(--gold);
+    opacity:0.5;
+  }
+  .tl-seal span{ font-family:'Fraunces',serif; font-weight:600; color:var(--gold); font-size:15px; }
+  .tl-stage.active .tl-seal{ background: var(--gold); border-color: var(--gold); }
+  .tl-stage.active .tl-seal::before{ border-color: rgba(247,243,228,0.5); }
+  .tl-stage.active .tl-seal span{ color: var(--ink-3); }
+  .tl-line{
+    position:absolute; top:28px; left: 56px; right:-26px; height:1px; background: repeating-linear-gradient(90deg, var(--gold) 0 6px, transparent 6px 12px);
+  }
+  .tl-stage:last-child .tl-line{ display:none; }
+  .tl-month{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--gold); text-transform:uppercase; margin-top:22px; }
+  .tl-stage h3{ font-size:19px; margin-top:8px; }
+  .tl-stage p{ margin-top:8px; color: var(--text-muted); font-size:14px; max-width:280px; }
+  .tl-hint{ margin-top:14px; font-size:11.5px; color: var(--text-muted); opacity:0.6; font-style:italic; }
+  .tl-cycle{ margin-top:48px; font-size:14px; color: var(--text-muted); font-style:italic; border-left:2px solid var(--gold); padding-left:16px; }
+
+  /* ---------- Advantages ---------- */
+  .adv{ background: var(--paper-2); }
+  .adv-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border:1px solid var(--line); margin-top:8px; }
+  .adv-item{ background: var(--paper-2); padding: 30px 26px; transition: background .25s; }
+  .adv-item:hover{ background: var(--paper); }
+  .adv-item .n{ font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:12px; }
+  .adv-item p{ margin-top:12px; font-size:14.5px; color: var(--text-dark); line-height:1.55; }
+
+  /* ---------- Scaling ---------- */
+  .scale{ background: var(--paper); }
+  .scale-track{ position:relative; margin-top:56px; padding-left: 2px; }
+  .scale-line{ position:absolute; left:11px; top:6px; bottom:6px; width:1px; background: var(--line); overflow:hidden; }
+  .scale-line-fill{ position:absolute; left:0; top:0; width:100%; height:0%; background: var(--gold); transition: height 1.4s ease; }
+  .scale-step{ position:relative; padding: 0 0 42px 42px; }
+  .scale-step:last-child{ padding-bottom:0; }
+  .scale-dot{ position:absolute; left:0; top:2px; width:23px; height:23px; border-radius:50%; border:1.5px solid var(--gold); background:var(--paper); transition: transform .3s; }
+  .scale-step:hover .scale-dot{ transform: scale(1.15); }
+  .scale-dot::after{ content:""; position:absolute; inset:6px; border-radius:50%; background:var(--gold); opacity:0; transition:opacity .4s; }
+  .scale-step:last-child .scale-dot::after{ opacity:1; }
+  .scale-step h3{ font-size:18px; }
+  .scale-step p{ margin-top:6px; color:var(--text-muted); font-size:14px; max-width:520px; }
+
+  /* ---------- CTA / Footer ---------- */
+  .cta{
+    background: radial-gradient(ellipse at 25% 20%, var(--ink-2) 0%, var(--ink-3) 60%);
+    color: var(--paper); text-align:center; padding: 120px 0 100px; position:relative; overflow:hidden;
+  }
+  .cta .wrap{ position:relative; z-index:2; }
+  .cta h2{ color:#F7F3E4; font-size: clamp(30px,4vw,44px); max-width:680px; margin:18px auto 0; }
+  .cta p{ margin-top:18px; color: rgba(247,243,228,0.68); font-size:15.5px; }
+  .cta .cta-row{ justify-content:center; margin-top:38px; }
+  .cta .eyebrow{ justify-content:center; color:var(--gold-light); }
+  .cta .eyebrow::before{ display:none; }
+
+  footer{ background: var(--ink-3); color: rgba(247,243,228,0.55); padding: 40px 0; font-size:13px; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  footer .fbrand{ font-family:'Fraunces',serif; color: rgba(247,243,228,0.85); font-size:15px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .navlinks{ display:none; }
+    .navtoggle{ display:block; }
+    .mobile-panel{ display:block; }
+    .hero .wrap{ grid-template-columns: 1fr; }
+    .dome-wrap{ order:-1; margin-bottom:20px; }
+    .dome-wrap svg{ max-width:260px; }
+    .hero-stats{ grid-template-columns: repeat(2,1fr); row-gap:28px; }
+    .flow{ grid-template-columns: 1fr; gap:14px; }
+    .flow-arrow{ transform: rotate(90deg); padding: 6px 0; }
+    .aud-grid{ grid-template-columns: 1fr; }
+    .program-grid{ grid-template-columns: 1fr; }
+    .price-card{ position:static; }
+    .lang-grid{ grid-template-columns: 1fr; }
+    .tl-row{ grid-template-columns: 1fr; gap: 36px; }
+    .tl-line{ display:none; }
+    .adv-grid{ grid-template-columns: 1fr; }
+    section{ padding: 76px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 200 200" fill="none">
+        <defs>
+          <linearGradient id="navWayGrad" x1="150" y1="140" x2="150" y2="8" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#1E8CA6"/>
+            <stop offset="1" stop-color="#F2A93B"/>
+          </linearGradient>
+        </defs>
+        <path d="M58,54 L58,136 C58,163 79,180 104,180 C129,180 150,163 150,136 L150,30"
+              stroke="url(#navWayGrad)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <path d="M150,8 L168,34 L150,26 L132,34 Z" fill="#F2A93B"/>
+      </svg>
+      Uni<span style="color:var(--brand-yellow, #F2A93B);">Way</span>
+    </div>
+    <nav class="navlinks" id="navlinks">
+      <a href="#idea" data-i18n="nav.about">About</a>
+      <a href="#program" data-i18n="nav.program">Program</a>
+      <a href="#languages" data-i18n="nav.languages">Languages</a>
+      <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+      <a href="#advantages" data-i18n="nav.advantages">Advantages</a>
+    </nav>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <div class="lang-switch">
+        <div class="lang-pill" id="langPill"></div>
+        <button class="lang-btn active" data-lang="en" type="button">EN</button>
+        <button class="lang-btn" data-lang="uk" type="button">UA</button>
+      </div>
+      <a class="nav-cta" href="#cta" data-i18n="nav.cta">Enroll</a>
+      <button class="navtoggle" id="navToggle" aria-label="Menu" aria-expanded="false" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <div class="wrap">
+      <a href="#idea" data-i18n="nav.about">About</a>
+      <a href="#program" data-i18n="nav.program">Program</a>
+      <a href="#languages" data-i18n="nav.languages">Languages</a>
+      <a href="#timeline" data-i18n="nav.timeline">Timeline</a>
+      <a href="#advantages" data-i18n="nav.advantages">Advantages</a>
+    </div>
+  </div>
+</header>
+
+<section class="brand-split" id="brandSplit">
+  <div class="brand-split-inner">
+    <div class="brand-svg-wrap">
+      <svg viewBox="0 0 200 200" fill="none">
+        <defs>
+          <linearGradient id="heroWayGrad" x1="150" y1="140" x2="150" y2="8" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stop-color="#2CA9C4"/>
+            <stop offset="1" stop-color="#F2A93B"/>
+          </linearGradient>
+        </defs>
+        <g id="bp-rotor">
+          <path id="bp-leg-left" d="M58,54 L58,136" stroke="url(#heroWayGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <path id="bp-curve" d="M58,136 C58,163 79,180 104,180 C129,180 150,163 150,136" stroke="url(#heroWayGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <path id="bp-leg-right" d="M150,136 L150,30" stroke="url(#heroWayGrad)" stroke-width="20" stroke-linecap="round" fill="none"/>
+          <path id="bp-arrow" d="M150,8 L168,34 L150,26 L132,34 Z" fill="#F2A93B"/>
+        </g>
+        <circle id="bp-snake" cx="100" cy="100" r="55" stroke="url(#heroWayGrad)" stroke-width="16" stroke-linecap="round" fill="none" opacity="0"/>
+        <g id="bp-snake-head" opacity="0">
+          <path d="M0,-17 L14,11 L0,3 L-14,11 Z" fill="#F2A93B"/>
+        </g>
+      </svg>
+    </div>
+    <div class="brand-wordmark" id="brandWordmark">UNIWAY</div>
+    <div class="brand-scroll-hint" id="brandHint" data-i18n="brand.hint">Scroll to explore</div>
+
+    <div class="option-card oc-head" id="ocHead">
+      <div class="oc-tag" data-i18n="brand.opt1.tag">01 — Core Program</div>
+      <h4 data-i18n="brand.opt1.h4">Admission Prep Course</h4>
+      <p data-i18n="brand.opt1.p">Full academic and application support for Vienna university admission.</p>
+    </div>
+    <div class="option-card oc-wing" id="ocWing">
+      <div class="oc-tag" data-i18n="brand.opt2.tag">02 — Available Now</div>
+      <h4 data-i18n="brand.opt2.h4">Language Courses</h4>
+      <p data-i18n="brand.opt2.p">German and English (IELTS) prep, starting with the school year.</p>
+    </div>
+    <div class="option-card oc-torso" id="ocTorso">
+      <div class="oc-tag" data-i18n="brand.opt3.tag">03 — Guidance</div>
+      <h4 data-i18n="brand.opt3.h4">Admissions Consulting</h4>
+      <p data-i18n="brand.opt3.p">Requirements breakdown and document support for every university.</p>
+    </div>
+    <div class="option-card oc-tail" id="ocTail">
+      <div class="oc-tag" data-i18n="brand.opt4.tag">04 — Growing</div>
+      <h4 data-i18n="brand.opt4.h4">School Partnerships</h4>
+      <p data-i18n="brand.opt4.p">Expanding the model to more private schools across Austria.</p>
+    </div>
+  </div>
+</section>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" data-i18n="hero.eyebrow">University Admission Prep · Vienna</div>
+      <h1 data-i18n-html="hero.title">The road to a Vienna&nbsp;university starts&nbsp;<em>inside the school</em></h1>
+      <p class="lead" data-i18n="hero.lead">A university admission preparation course for graduating students of a private school in Vienna — academic coaching, guidance on admission requirements, and full support through to enrollment.</p>
+      <div class="cta-row">
+        <a class="btn-gold" href="#cta" data-i18n="hero.cta1">Enroll in the Course</a>
+        <a class="btn-ghost" href="#program" data-i18n="hero.cta2">View Program</a>
+      </div>
+    </div>
+    <div class="dome-wrap">
+      <svg viewBox="0 0 420 420" fill="none">
+        <circle class="ring-slow" cx="210" cy="210" r="200" stroke="#D9BD79" stroke-width="0.6" opacity="0.35" stroke-dasharray="2 6"/>
+        <circle class="ring-slow-rev" cx="210" cy="210" r="160" stroke="#D9BD79" stroke-width="0.6" opacity="0.45" stroke-dasharray="1 5"/>
+        <circle cx="210" cy="210" r="120" stroke="#D9BD79" stroke-width="0.8" opacity="0.55"/>
+        <g opacity="0.8">
+          <line x1="210" y1="10" x2="210" y2="410" stroke="#D9BD79" stroke-width="0.5"/>
+          <line x1="10" y1="210" x2="410" y2="210" stroke="#D9BD79" stroke-width="0.5"/>
+          <line x1="68" y1="68" x2="352" y2="352" stroke="#D9BD79" stroke-width="0.5"/>
+          <line x1="352" y1="68" x2="68" y2="352" stroke="#D9BD79" stroke-width="0.5"/>
+        </g>
+        <circle cx="210" cy="210" r="72" fill="#16302A" stroke="#D9BD79" stroke-width="1.2"/>
+        <text x="210" y="203" text-anchor="middle" font-family="Fraunces, serif" font-size="30" fill="#F7F3E4" font-weight="600">400</text>
+        <text x="210" y="228" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="2" fill="#D9BD79">EUR · KURS</text>
+        <g>
+          <circle class="seal-dot" cx="210" cy="38" r="4" fill="#D9BD79"/>
+          <circle class="seal-dot" cx="382" cy="210" r="4" fill="#D9BD79"/>
+          <circle class="seal-dot" cx="210" cy="382" r="4" fill="#D9BD79"/>
+          <circle class="seal-dot" cx="38" cy="210" r="4" fill="#D9BD79"/>
+        </g>
+      </svg>
+    </div>
+    <div class="hero-stats" style="grid-column:1/-1;">
+      <div class="stat"><b><span class="count" data-count="400">0</span>&nbsp;€</b><span data-i18n="stat.price">course price</span></div>
+      <div class="stat"><b><span class="count" data-count="6">0</span>–<span class="count" data-count="8">0</span></b><span data-i18n="stat.weeks">weeks of study</span></div>
+      <div class="stat"><b><span class="count" data-count="11">0</span></b><span data-i18n="stat.grade">grade — graduating class</span></div>
+      <div class="stat"><b><span class="count" data-count="30">0</span>%</b><span data-i18n="stat.school">to partner school</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="idea" id="idea">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="idea.eyebrow">Project Idea</div>
+      <h2 data-i18n="idea.h2">Preparation without leaving school</h2>
+    </div>
+    <div class="idea-copy reveal">
+      <p data-i18n="idea.p">The course runs in partnership with a private school in Vienna: the school provides classrooms and promotes the course among its students, while our team builds the curriculum and teaches the classes. The goal is to give students a way to prepare properly for admission while still in school.</p>
+    </div>
+
+    <div class="flow">
+      <div class="flow-card reveal">
+        <div class="num" data-i18n="flow.c1.num">01 — School</div>
+        <h3 data-i18n="flow.c1.h3">Private School</h3>
+        <ul>
+          <li data-i18n="flow.c1.li1">Provides classrooms</li>
+          <li data-i18n="flow.c1.li2">Promotes the course to students</li>
+          <li data-i18n="flow.c1.li3">Receives an agreed share of revenue</li>
+        </ul>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-card mid reveal">
+        <div class="num" data-i18n="flow.c2.num">02 — Team</div>
+        <h3 data-i18n="flow.c2.h3">Our Team</h3>
+        <ul>
+          <li data-i18n="flow.c2.li1">Builds the prep curriculum</li>
+          <li data-i18n="flow.c2.li2">Teaches classes and runs consultations</li>
+          <li data-i18n="flow.c2.li3">Organizes the entire learning process</li>
+        </ul>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-card reveal">
+        <div class="num" data-i18n="flow.c3.num">03 — Students</div>
+        <h3 data-i18n="flow.c3.h3">Graduating Students</h3>
+        <ul>
+          <li data-i18n="flow.c3.li1">Prepare for university admission</li>
+          <li data-i18n="flow.c3.li2">Study in a familiar environment</li>
+          <li data-i18n="flow.c3.li3">Receive full support</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="audience" id="audience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="aud.eyebrow">Who It's For</div>
+      <h2 data-i18n="aud.h2">Target Audience</h2>
+    </div>
+    <div class="aud-grid">
+      <div class="aud-card reveal">
+        <div class="glyph">11</div>
+        <h3 data-i18n="aud.c1.h3">Grade 11 Students</h3>
+        <p data-i18n="aud.c1.p">Graduating students of a private school in Vienna preparing for admission to Austrian universities.</p>
+      </div>
+      <div class="aud-card reveal">
+        <div class="glyph">AT</div>
+        <h3 data-i18n="aud.c2.h3">International Students</h3>
+        <p data-i18n="aud.c2.p">Students from other countries planning to continue their studies specifically in Austria.</p>
+      </div>
+      <div class="aud-card reveal">
+        <div class="glyph">+</div>
+        <h3 data-i18n="aud.c3.h3">Prospective Applicants</h3>
+        <p data-i18n="aud.c3.p">Students who need additional academic preparation before applying.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="program" id="program">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="program.eyebrow">Program</div>
+      <h2 data-i18n="program.h2">Preparation Course</h2>
+    </div>
+    <div class="program-grid">
+      <div class="price-card reveal">
+        <div class="tag" data-i18n="price.tag1">Course Price</div>
+        <div class="amount">400<span> €</span></div>
+        <div class="duration" data-i18n="price.duration1">per participant</div>
+        <hr>
+        <div class="tag" data-i18n="price.tag2">Duration</div>
+        <div class="duration" style="margin-top:8px; color:#F7F3E4; font-size:15px;" data-i18n="price.duration2">6–8 weeks</div>
+        <p class="note" style="margin-top:8px;" data-i18n="price.note">The exact format and length depend on group size and the school's academic calendar.</p>
+        <a class="btn-gold" href="#cta" data-i18n="price.btn">Submit an Application</a>
+      </div>
+      <div class="incl-list">
+        <div class="incl-item reveal">
+          <div class="idx">01</div>
+          <div><h4 data-i18n="incl.1.h4">Admission Preparation</h4><p data-i18n="incl.1.p">A full walkthrough of the university admission process in Vienna, start to finish.</p></div>
+        </div>
+        <div class="incl-item reveal">
+          <div class="idx">02</div>
+          <div><h4 data-i18n="incl.2.h4">Academic Coaching</h4><p data-i18n="incl.2.p">Classes in the subjects required for the chosen field of study.</p></div>
+        </div>
+        <div class="incl-item reveal">
+          <div class="idx">03</div>
+          <div><h4 data-i18n="incl.3.h4">University Requirements Guidance</h4><p data-i18n="incl.3.p">A breakdown of entry requirements for specific universities and faculties.</p></div>
+        </div>
+        <div class="incl-item reveal">
+          <div class="idx">04</div>
+          <div><h4 data-i18n="incl.4.h4">Document Support</h4><p data-i18n="incl.4.p">Assistance preparing and submitting admission documents.</p></div>
+        </div>
+        <div class="incl-item reveal">
+          <div class="idx">05</div>
+          <div><h4 data-i18n="incl.5.h4">Meetings with Teachers</h4><p data-i18n="incl.5.p">Regular in-person sessions with course instructors.</p></div>
+        </div>
+        <div class="incl-item reveal">
+          <div class="idx">06</div>
+          <div><h4 data-i18n="incl.6.h4">Materials &amp; Support</h4><p data-i18n="incl.6.p">Learning materials and support throughout the entire course.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="langs" id="languages">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="langs.eyebrow">Available Right Now</div>
+      <h2 data-i18n="langs.h2">Language Prep from the Start of the School Year</h2>
+      <p data-i18n="langs.p">German and English courses can begin right away — they're not tied to the main program's timeline, and create an extra touchpoint with the school before the main course starts in March.</p>
+    </div>
+    <div class="lang-grid">
+      <div class="lang-card reveal">
+        <span class="lang-badge" data-i18n="langs.badge">Available Now</span>
+        <h3 data-i18n="langs.c1.h3">German</h3>
+        <p data-i18n="langs.c1.p">Language-level preparation for studying and everyday life in Austria — alongside the regular school program.</p>
+      </div>
+      <div class="lang-card reveal">
+        <span class="lang-badge" data-i18n="langs.badge">Available Now</span>
+        <h3 data-i18n="langs.c2.h3">English (IELTS)</h3>
+        <p data-i18n="langs.c2.p">Preparation for the international exam required by universities that ask for a confirmed English level.</p>
+      </div>
+    </div>
+    <div class="langs-note reveal" data-i18n="langs.note">Launching the language courses doesn't depend on the main program's timeline — they can start right away, with the new school year.</div>
+  </div>
+</section>
+
+<section class="timeline" id="timeline">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="tl.eyebrow">Launch Timeline</div>
+      <h2 data-i18n="tl.h2">From Announcement to First Cohort</h2>
+    </div>
+    <div class="tl-row">
+      <div class="tl-stage reveal" data-stage="1">
+        <div class="tl-seal"><span>1</span></div>
+        <div class="tl-line"></div>
+        <div class="tl-month" data-i18n="tl.s1.month">October</div>
+        <h3 data-i18n="tl.s1.h3">Course Announcement</h3>
+        <p data-i18n="tl.s1.p">The school drives traffic and promotion among graduating students.</p>
+      </div>
+      <div class="tl-stage reveal" data-stage="2">
+        <div class="tl-seal"><span>2</span></div>
+        <div class="tl-line"></div>
+        <div class="tl-month" data-i18n="tl.s2.month">January – February</div>
+        <h3 data-i18n="tl.s2.h3">Group Enrollment</h3>
+        <p data-i18n="tl.s2.p">Collecting applications and forming the first cohort.</p>
+      </div>
+      <div class="tl-stage active reveal" data-stage="3">
+        <div class="tl-seal"><span>3</span></div>
+        <div class="tl-month" data-i18n="tl.s3.month">March</div>
+        <h3 data-i18n="tl.s3.h3">Classes Begin</h3>
+        <p data-i18n="tl.s3.p">Teaching runs for 6–8 weeks through course completion.</p>
+        <div class="tl-hint" data-i18n="tl.hint">Tap a stage to explore</div>
+      </div>
+    </div>
+    <div class="tl-cycle reveal" data-i18n="tl.cycle">Full cycle — about 5–6 months from announcement to graduating the first cohort.</div>
+  </div>
+</section>
+
+<section class="adv" id="advantages">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="adv.eyebrow">Why Us</div>
+      <h2 data-i18n="adv.h2">Competitive Advantages</h2>
+    </div>
+    <div class="adv-grid">
+      <div class="adv-item reveal"><div class="n">01</div><p data-i18n="adv.1">Classes take place directly on the private school's campus in Vienna.</p></div>
+      <div class="adv-item reveal"><div class="n">02</div><p data-i18n="adv.2">Direct access to the school's existing graduating-class audience.</p></div>
+      <div class="adv-item reveal"><div class="n">03</div><p data-i18n="adv.3">400 € price point — affordable for most families.</p></div>
+      <div class="adv-item reveal"><div class="n">04</div><p data-i18n="adv.4">Academic prep in a comfortable, familiar school environment.</p></div>
+      <div class="adv-item reveal"><div class="n">05</div><p data-i18n="adv.5">Option to continue with German and IELTS preparation.</p></div>
+      <div class="adv-item reveal"><div class="n">06</div><p data-i18n="adv.6">Potential for a long-term partnership and yearly enrollment.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="scale" id="scale">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow" data-i18n="scale.eyebrow">Growth Horizon</div>
+      <h2 data-i18n="scale.h2">Scaling Opportunities</h2>
+    </div>
+    <div class="scale-track">
+      <div class="scale-line"><div class="scale-line-fill" id="scaleLineFill"></div></div>
+      <div class="scale-step reveal"><div class="scale-dot"></div><h3 data-i18n="scale.1.h3">Other Vienna Schools</h3><p data-i18n="scale.1.p">Launching the course at other private schools in the city, using the same partnership model.</p></div>
+      <div class="scale-step reveal"><div class="scale-dot"></div><h3 data-i18n="scale.2.h3">Austria-wide Network</h3><p data-i18n="scale.2.p">A partner network of private schools across the country.</p></div>
+      <div class="scale-step reveal"><div class="scale-dot"></div><h3 data-i18n="scale.3.h3">Other Cities</h3><p data-i18n="scale.3.p">Expansion into Graz, Linz, and Salzburg.</p></div>
+      <div class="scale-step reveal"><div class="scale-dot"></div><h3 data-i18n="scale.4.h3">Europe</h3><p data-i18n="scale.4.p">Similar prep courses in other European countries.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="cta.eyebrow">Let's Start Working Together</div>
+    <h2 class="reveal" data-i18n="cta.h2">Ready to discuss launching the course at your school</h2>
+    <p class="reveal" data-i18n="cta.p">First cohort — 20 students · Classes start in March · Language courses available now</p>
+    <div class="cta-row reveal">
+      <a class="btn-gold" href="mailto:info@vorbereitung-wien.example" data-i18n="cta.btn1">Get in Touch</a>
+      <a class="btn-ghost" href="#idea" data-i18n="cta.btn2">Back to the Project</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">UniWay</div>
+    <div data-i18n="footer.text">University admission preparation course in Vienna · 2026</div>
+  </div>
+</footer>
+
+<script>
+  const translations = {
+    en: {
+      'meta.title': 'University Admission Prep — Vienna',
+      'nav.about': 'About', 'nav.program': 'Program', 'nav.languages': 'Languages',
+      'nav.timeline': 'Timeline', 'nav.advantages': 'Advantages', 'nav.cta': 'Enroll',
+      'hero.eyebrow': 'University Admission Prep · Vienna',
+      'hero.lead': 'A university admission preparation course for graduating students of a private school in Vienna — academic coaching, guidance on admission requirements, and full support through to enrollment.',
+      'hero.cta1': 'Enroll in the Course', 'hero.cta2': 'View Program',
+      'stat.price': 'course price', 'stat.weeks': 'weeks of study', 'stat.grade': 'grade — graduating class', 'stat.school': 'to partner school',
+      'idea.eyebrow': 'Project Idea', 'idea.h2': 'Preparation without leaving school',
+      'idea.p': 'The course runs in partnership with a private school in Vienna: the school provides classrooms and promotes the course among its students, while our team builds the curriculum and teaches the classes. The goal is to give students a way to prepare properly for admission while still in school.',
+      'flow.c1.num': '01 — School', 'flow.c1.h3': 'Private School',
+      'flow.c1.li1': 'Provides classrooms', 'flow.c1.li2': 'Promotes the course to students', 'flow.c1.li3': 'Receives an agreed share of revenue',
+      'flow.c2.num': '02 — Team', 'flow.c2.h3': 'Our Team',
+      'flow.c2.li1': 'Builds the prep curriculum', 'flow.c2.li2': 'Teaches classes and runs consultations', 'flow.c2.li3': 'Organizes the entire learning process',
+      'flow.c3.num': '03 — Students', 'flow.c3.h3': 'Graduating Students',
+      'flow.c3.li1': 'Prepare for university admission', 'flow.c3.li2': 'Study in a familiar environment', 'flow.c3.li3': 'Receive full support',
+      'aud.eyebrow': "Who It's For", 'aud.h2': 'Target Audience',
+      'aud.c1.h3': 'Grade 11 Students', 'aud.c1.p': 'Graduating students of a private school in Vienna preparing for admission to Austrian universities.',
+      'aud.c2.h3': 'International Students', 'aud.c2.p': 'Students from other countries planning to continue their studies specifically in Austria.',
+      'aud.c3.h3': 'Prospective Applicants', 'aud.c3.p': 'Students who need additional academic preparation before applying.',
+      'program.eyebrow': 'Program', 'program.h2': 'Preparation Course',
+      'price.tag1': 'Course Price', 'price.duration1': 'per participant',
+      'price.tag2': 'Duration', 'price.duration2': '6–8 weeks',
+      'price.note': "The exact format and length depend on group size and the school's academic calendar.",
+      'price.btn': 'Submit an Application',
+      'incl.1.h4': 'Admission Preparation', 'incl.1.p': 'A full walkthrough of the university admission process in Vienna, start to finish.',
+      'incl.2.h4': 'Academic Coaching', 'incl.2.p': 'Classes in the subjects required for the chosen field of study.',
+      'incl.3.h4': 'University Requirements Guidance', 'incl.3.p': 'A breakdown of entry requirements for specific universities and faculties.',
+      'incl.4.h4': 'Document Support', 'incl.4.p': 'Assistance preparing and submitting admission documents.',
+      'incl.5.h4': 'Meetings with Teachers', 'incl.5.p': 'Regular in-person sessions with course instructors.',
+      'incl.6.h4': 'Materials & Support', 'incl.6.p': 'Learning materials and support throughout the entire course.',
+      'langs.eyebrow': 'Available Right Now', 'langs.h2': 'Language Prep from the Start of the School Year',
+      'langs.p': "German and English courses can begin right away — they're not tied to the main program's timeline, and create an extra touchpoint with the school before the main course starts in March.",
+      'langs.badge': 'Available Now',
+      'langs.c1.h3': 'German', 'langs.c1.p': 'Language-level preparation for studying and everyday life in Austria — alongside the regular school program.',
+      'langs.c2.h3': 'English (IELTS)', 'langs.c2.p': 'Preparation for the international exam required by universities that ask for a confirmed English level.',
+      'langs.note': "Launching the language courses doesn't depend on the main program's timeline — they can start right away, with the new school year.",
+      'tl.eyebrow': 'Launch Timeline', 'tl.h2': 'From Announcement to First Cohort',
+      'tl.s1.month': 'October', 'tl.s1.h3': 'Course Announcement', 'tl.s1.p': 'The school drives traffic and promotion among graduating students.',
+      'tl.s2.month': 'January – February', 'tl.s2.h3': 'Group Enrollment', 'tl.s2.p': 'Collecting applications and forming the first cohort.',
+      'tl.s3.month': 'March', 'tl.s3.h3': 'Classes Begin', 'tl.s3.p': 'Teaching runs for 6–8 weeks through course completion.',
+      'tl.hint': 'Tap a stage to explore',
+      'tl.cycle': 'Full cycle — about 5–6 months from announcement to graduating the first cohort.',
+      'adv.eyebrow': 'Why Us', 'adv.h2': 'Competitive Advantages',
+      'adv.1': "Classes take place directly on the private school's campus in Vienna.",
+      'adv.2': "Direct access to the school's existing graduating-class audience.",
+      'adv.3': '400 € price point — affordable for most families.',
+      'adv.4': 'Academic prep in a comfortable, familiar school environment.',
+      'adv.5': 'Option to continue with German and IELTS preparation.',
+      'adv.6': 'Potential for a long-term partnership and yearly enrollment.',
+      'scale.eyebrow': 'Growth Horizon', 'scale.h2': 'Scaling Opportunities',
+      'scale.1.h3': 'Other Vienna Schools', 'scale.1.p': 'Launching the course at other private schools in the city, using the same partnership model.',
+      'scale.2.h3': 'Austria-wide Network', 'scale.2.p': 'A partner network of private schools across the country.',
+      'scale.3.h3': 'Other Cities', 'scale.3.p': 'Expansion into Graz, Linz, and Salzburg.',
+      'scale.4.h3': 'Europe', 'scale.4.p': 'Similar prep courses in other European countries.',
+      'cta.eyebrow': "Let's Start Working Together", 'cta.h2': 'Ready to discuss launching the course at your school',
+      'cta.p': 'First cohort — 20 students · Classes start in March · Language courses available now',
+      'cta.btn1': 'Get in Touch', 'cta.btn2': 'Back to the Project',
+      'footer.text': 'University admission preparation course in Vienna · 2026',
+      'brand.hint': 'Scroll to explore',
+      'brand.opt1.tag': '01 — Core Program', 'brand.opt1.h4': 'Admission Prep Course', 'brand.opt1.p': 'Full academic and application support for Vienna university admission.',
+      'brand.opt2.tag': '02 — Available Now', 'brand.opt2.h4': 'Language Courses', 'brand.opt2.p': 'German and English (IELTS) prep, starting with the school year.',
+      'brand.opt3.tag': '03 — Guidance', 'brand.opt3.h4': 'Admissions Consulting', 'brand.opt3.p': 'Requirements breakdown and document support for every university.',
+      'brand.opt4.tag': '04 — Growing', 'brand.opt4.h4': 'School Partnerships', 'brand.opt4.p': 'Expanding the model to more private schools across Austria.',
+    },
+    uk: {
+      'meta.title': 'Підготовчий курс — університети Відня',
+      'nav.about': 'Про проєкт', 'nav.program': 'Програма', 'nav.languages': 'Мови',
+      'nav.timeline': 'Таймлайн', 'nav.advantages': 'Переваги', 'nav.cta': 'Записатися',
+      'hero.eyebrow': 'Підготовка до вступу · Відень',
+      'hero.lead': 'Підготовчий курс для учнів випускних класів приватної школи у Відні — академічна підготовка, консультації щодо вимог університетів і повний супровід до вступу.',
+      'hero.cta1': 'Записатися на курс', 'hero.cta2': 'Переглянути програму',
+      'stat.price': 'вартість курсу', 'stat.weeks': 'тижнів навчання', 'stat.grade': 'клас — випускники', 'stat.school': 'школі-партнеру',
+      'idea.eyebrow': 'Ідея проєкту', 'idea.h2': 'Підготовка без потреби залишати школу',
+      'idea.p': 'Курс реалізується у партнерстві з приватною школою у Відні: школа надає аудиторії та просуває курс серед своїх учнів, наша команда розробляє програму і проводить заняття. Мета — дати учням можливість якісно підготуватися до вступу ще під час навчання в школі.',
+      'flow.c1.num': '01 — школа', 'flow.c1.h3': 'Приватна школа',
+      'flow.c1.li1': 'Надає навчальні аудиторії', 'flow.c1.li2': 'Просуває курс серед учнів', 'flow.c1.li3': 'Отримує погоджений % від вартості',
+      'flow.c2.num': '02 — команда', 'flow.c2.h3': 'Наша команда',
+      'flow.c2.li1': 'Розробляє програму підготовки', 'flow.c2.li2': 'Проводить заняття і консультації', 'flow.c2.li3': 'Організовує весь навчальний процес',
+      'flow.c3.num': '03 — учні', 'flow.c3.h3': 'Випускники 11 класу',
+      'flow.c3.li1': 'Готуються до вступу в університет', 'flow.c3.li2': 'Навчаються у звичному середовищі', 'flow.c3.li3': 'Отримують повний супровід',
+      'aud.eyebrow': 'Для кого курс', 'aud.h2': 'Цільова аудиторія',
+      'aud.c1.h3': 'Учні 11 класів', 'aud.c1.p': 'Випускники приватної школи у Відні, які готуються до вступу в австрійські університети.',
+      'aud.c2.h3': 'Міжнародні учні', 'aud.c2.p': 'Учні школи з інших країн, які планують продовжити навчання саме в Австрії.',
+      'aud.c3.h3': 'Абітурієнти', 'aud.c3.p': 'Учні, яким потрібна додаткова академічна підготовка перед вступом.',
+      'program.eyebrow': 'Програма', 'program.h2': 'Підготовчий курс',
+      'price.tag1': 'Вартість участі', 'price.duration1': 'за одного учасника',
+      'price.tag2': 'Тривалість', 'price.duration2': '6–8 тижнів',
+      'price.note': 'Формат і точна тривалість визначаються складом групи та навчальним планом школи.',
+      'price.btn': 'Залишити заявку',
+      'incl.1.h4': 'Підготовка до вступу', 'incl.1.p': 'Розбір процесу вступу до університетів Відня від початку до кінця.',
+      'incl.2.h4': 'Академічна підготовка', 'incl.2.p': 'Заняття з дисциплін, необхідних для обраного напряму.',
+      'incl.3.h4': 'Консультації щодо вимог університетів', 'incl.3.p': 'Розбір вступних вимог конкретних університетів і факультетів.',
+      'incl.4.h4': 'Допомога з документами', 'incl.4.p': 'Супровід під час підготовки та подання документів на вступ.',
+      'incl.5.h4': 'Зустрічі з викладачами', 'incl.5.p': 'Регулярні очні зустрічі з викладачами курсу.',
+      'incl.6.h4': 'Матеріали і супровід', 'incl.6.p': 'Навчальні матеріали та підтримка протягом усього курсу.',
+      'langs.eyebrow': 'Доступно вже зараз', 'langs.h2': 'Мовна підготовка з початком навчального року',
+      'langs.p': 'Курси німецької та англійської можна почати вже зараз — вони не прив\u2019язані до таймлайну основної програми і створюють додаткову точку контакту зі школою ще до старту курсу в березні.',
+      'langs.badge': 'Доступно зараз',
+      'langs.c1.h3': 'Німецька мова', 'langs.c1.p': 'Підготовка рівня мови для навчання і повсякденного життя в Австрії — паралельно з основною шкільною програмою.',
+      'langs.c2.h3': 'Англійська мова (IELTS)', 'langs.c2.p': 'Підготовка до міжнародного іспиту для вступу в університети, де потрібен підтверджений рівень англійської.',
+      'langs.note': 'Запуск мовних курсів не залежить від таймлайну основної підготовчої програми — старт можливий одразу з початком навчального року.',
+      'tl.eyebrow': 'Таймлайн запуску', 'tl.h2': 'Від анонсу до першого потоку',
+      'tl.s1.month': 'Жовтень', 'tl.s1.h3': 'Анонс курсу', 'tl.s1.p': 'Школа надає трафік і рекламу серед учнів випускних класів.',
+      'tl.s2.month': 'Січень – Лютий', 'tl.s2.h3': 'Набір групи', 'tl.s2.p': 'Збір заявок і формування складу першого потоку.',
+      'tl.s3.month': 'Березень', 'tl.s3.h3': 'Старт занять', 'tl.s3.p': 'Навчання триває 6–8 тижнів до завершення курсу.',
+      'tl.hint': 'Натисніть на етап',
+      'tl.cycle': 'Загальний цикл — близько 5–6 місяців від анонсу до випуску першого потоку.',
+      'adv.eyebrow': 'Чому ми', 'adv.h2': 'Конкурентні переваги',
+      'adv.1': 'Курс проходить безпосередньо на базі приватної школи у Відні.',
+      'adv.2': 'Доступ до наявної аудиторії випускних класів через школу.',
+      'adv.3': 'Вартість 400 € — доступно для більшості родин.',
+      'adv.4': 'Академічна підготовка в комфортному шкільному середовищі.',
+      'adv.5': 'Можливість продовження підготовки з німецької мови та IELTS.',
+      'adv.6': 'Перспектива довгострокової співпраці та щорічного набору.',
+      'scale.eyebrow': 'Горизонт зростання', 'scale.h2': 'Можливості масштабування',
+      'scale.1.h3': 'Інші школи Відня', 'scale.1.p': 'Запуск курсу в інших приватних школах міста за тією ж партнерською моделлю.',
+      'scale.2.h3': 'Мережа по Австрії', 'scale.2.p': 'Партнерська мережа приватних шкіл по всій країні.',
+      'scale.3.h3': 'Інші міста', 'scale.3.p': 'Розширення на Грац, Лінц і Зальцбург.',
+      'scale.4.h3': 'Європа', 'scale.4.p': 'Аналогічні підготовчі курси в інших країнах Європи.',
+      'cta.eyebrow': 'Почати співпрацю', 'cta.h2': 'Готові обговорити запуск курсу у вашій школі',
+      'cta.p': 'Перша група — 20 студентів · Старт занять у березні · Мовні курси доступні вже зараз',
+      'cta.btn1': 'Написати нам', 'cta.btn2': 'Ще раз про проєкт',
+      'footer.text': 'Підготовчий курс для вступу до університетів Відня · 2026',
+      'brand.hint': 'Прокрутіть, щоб дослідити',
+      'brand.opt1.tag': '01 — Основна програма', 'brand.opt1.h4': 'Підготовчий курс', 'brand.opt1.p': 'Повна академічна підготовка та супровід вступу до університетів Відня.',
+      'brand.opt2.tag': '02 — Доступно зараз', 'brand.opt2.h4': 'Мовні курси', 'brand.opt2.p': 'Підготовка з німецької та англійської (IELTS) з початком навчального року.',
+      'brand.opt3.tag': '03 — Супровід', 'brand.opt3.h4': 'Консультації щодо вступу', 'brand.opt3.p': 'Розбір вимог і допомога з документами для будь-якого університету.',
+      'brand.opt4.tag': '04 — Зростання', 'brand.opt4.h4': 'Партнерство зі школами', 'brand.opt4.p': 'Розширення моделі на інші приватні школи Австрії.',
+    }
+  };
+
+  const htmlTranslations = {
+    en: { 'hero.title': 'The road to a Vienna&nbsp;university starts&nbsp;<em>inside the school</em>' },
+    uk: { 'hero.title': 'Шлях до віденського&nbsp;університету починається&nbsp;<em>у стінах школи</em>' }
+  };
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function applyLang(lang){
+    if(!translations[lang]) return;
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      const key = el.getAttribute('data-i18n');
+      if(translations[lang][key] !== undefined) el.textContent = translations[lang][key];
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+      const key = el.getAttribute('data-i18n-html');
+      if(htmlTranslations[lang][key] !== undefined) el.innerHTML = htmlTranslations[lang][key];
+    });
+    document.documentElement.lang = lang === 'uk' ? 'uk' : 'en';
+    document.title = translations[lang]['meta.title'];
+    document.querySelectorAll('.lang-btn').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    const idx = lang === 'uk' ? 1 : 0;
+    const pill = document.getElementById('langPill');
+    if(pill) pill.style.transform = 'translateX(' + (idx * 100) + '%)';
+  }
+
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.addEventListener('click', function(){ applyLang(b.getAttribute('data-lang')); });
+  });
+
+  /* ---------- Mobile menu ---------- */
+  const navToggle = document.getElementById('navToggle');
+  const mobilePanel = document.getElementById('mobilePanel');
+  if(navToggle){
+    navToggle.addEventListener('click', function(){
+      const open = mobilePanel.classList.toggle('open');
+      navToggle.classList.toggle('open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    mobilePanel.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        mobilePanel.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  /* ---------- Scroll progress bar ---------- */
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (scrolled / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive:true });
+  updateProgress();
+
+  /* ---------- Scrollspy ---------- */
+  const sectionIds = ['idea','program','languages','timeline','advantages'];
+  const navLinks = Array.from(document.querySelectorAll('.navlinks a'));
+  function updateScrollspy(){
+    let current = null;
+    sectionIds.forEach(function(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      const rect = el.getBoundingClientRect();
+      if(rect.top <= 130 && rect.bottom > 130) current = id;
+    });
+    navLinks.forEach(function(a){
+      a.classList.toggle('active', current && a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', updateScrollspy, { passive:true });
+  updateScrollspy();
+
+  /* ---------- Reveal on scroll ---------- */
+  if('IntersectionObserver' in window && !reduceMotion){
+    const io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+    const scaleTrack = document.querySelector('.scale-track');
+    if(scaleTrack){
+      const io2 = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            const fill = document.getElementById('scaleLineFill');
+            if(fill) fill.style.height = '100%';
+            io2.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      io2.observe(scaleTrack);
+    }
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+    const fill = document.getElementById('scaleLineFill');
+    if(fill) fill.style.height = '100%';
+  }
+
+  /* ---------- Animated counters ---------- */
+  function animateCount(el, target, duration){
+    if(reduceMotion){ el.textContent = target; return; }
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if(p < 1) requestAnimationFrame(tick);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(tick);
+  }
+  const heroStats = document.querySelector('.hero-stats');
+  if(heroStats && 'IntersectionObserver' in window){
+    const io3 = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          document.querySelectorAll('.count').forEach(function(el){
+            animateCount(el, parseInt(el.getAttribute('data-count'), 10), 1100);
+          });
+          io3.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    io3.observe(heroStats);
+  }
+
+  /* ---------- Interactive timeline ---------- */
+  document.querySelectorAll('.tl-stage').forEach(function(stage){
+    stage.addEventListener('click', function(){
+      document.querySelectorAll('.tl-stage').forEach(function(s){ s.classList.remove('active'); });
+      stage.classList.add('active');
+    });
+  });
+
+  applyLang('en');
+
+  /* ---------- Brand split scrollytelling ---------- */
+  (function(){
+    const section = document.getElementById('brandSplit');
+    if(!section) return;
+    const rotor = document.getElementById('bp-rotor');
+    const snake = document.getElementById('bp-snake');
+    const snakeHead = document.getElementById('bp-snake-head');
+    const wordmark = document.getElementById('brandWordmark');
+    const hint = document.getElementById('brandHint');
+    const cards = {
+      head: document.getElementById('ocHead'),
+      wing: document.getElementById('ocWing'),
+      torso: document.getElementById('ocTorso'),
+      tail: document.getElementById('ocTail'),
+    };
+    const cardThresholds = { head: 0.12, wing: 0.34, torso: 0.56, tail: 0.78 };
+    const CIRC = 2 * Math.PI * 55;
+    const R = 55;
+
+    function clampLerp(p, a, b){
+      if(p <= a) return 0;
+      if(p >= b) return 1;
+      return (p - a) / (b - a);
+    }
+
+    function setSpin(progress){
+      const p = Math.max(0, Math.min(1, progress));
+
+      const fadeIn = clampLerp(p, 0, 0.06);
+      const fadeOut = 1 - clampLerp(p, 0.90, 1);
+      const snakeOpacity = fadeIn * fadeOut;
+      snake.style.opacity = snakeOpacity;
+      snakeHead.style.opacity = snakeOpacity;
+      rotor.style.opacity = 1 - snakeOpacity;
+
+      const angleDeg = p * 360;
+      const angleRad = angleDeg * Math.PI / 180;
+      snake.style.strokeDashoffset = (-p * CIRC);
+      const hx = R * Math.cos(angleRad);
+      const hy = R * Math.sin(angleRad);
+      snakeHead.style.transform = 'translate(' + (100 + hx) + 'px,' + (100 + hy) + 'px) rotate(' + (angleDeg + 180) + 'deg)';
+
+      wordmark.style.opacity = Math.max(0, 1 - p*3);
+      hint.style.opacity = p > 0.06 ? 0 : 1;
+      Object.keys(cards).forEach(function(k){
+        cards[k].classList.toggle('show', p > cardThresholds[k]);
+      });
+    }
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion){
+      section.style.height = 'auto';
+      const inner = section.querySelector('.brand-split-inner');
+      if(inner) inner.style.position = 'relative';
+      setSpin(1);
+      return;
+    }
+
+    let ticking = false;
+    function update(){
+      const rect = section.getBoundingClientRect();
+      const total = section.offsetHeight - window.innerHeight;
+      const progress = total > 0 ? (-rect.top) / total : 0;
+      setSpin(progress);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if(!ticking){ requestAnimationFrame(update); ticking = true; }
+    }, { passive:true });
+    update();
+  })();
+</script>
+
+</body>
+</html>
